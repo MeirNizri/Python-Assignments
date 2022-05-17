@@ -7,6 +7,7 @@ from budget_analysis import (education_budget,
                              budget_difference)
 
 class Tests(unittest.TestCase):
+
     def test_education_budget(self):
         self.assertEqual(education_budget(1997), 19320620000)
         self.assertEqual(education_budget(2000), 22488965000)
@@ -57,7 +58,6 @@ class Tests(unittest.TestCase):
             budget_difference(2000, 'אין משרד כזה')
         with self.assertRaises(Exception):
             budget_difference(1900, 'חינוך')
-
 
 if __name__ == '__main__':
     unittest.main()

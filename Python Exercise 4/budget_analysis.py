@@ -3,16 +3,13 @@ import pandas as pd
 # get budget dataset
 budget = pd.read_csv('national-budget.csv')
 
-
 def get_budget(year: int, office: str = None) -> int:
     """
     Gets the budget, of a given office or the entire budget, in a specific year
 
-    entire budget
+    examples:
     >>> get_budget(1997)
     186045315000
-
-    specific office budget
     >>> get_budget(1997, 'בריאות')
     11017315000
     >>> get_budget(2000, 'אין_משרד_כזה')
@@ -35,7 +32,7 @@ def get_budget(year: int, office: str = None) -> int:
                              & (budget['הוצאה/הכנסה'] == 'הוצאה')
                              & (budget['סוג תקציב'] == 'מאושר')]
 
-    return int(budget_['הוצאה נטו'].sum() * 1000)
+    return int(budget_['הוצאה נטו'].sum()) * 1000
 
 
 def education_budget(year: int) -> int:
@@ -99,29 +96,26 @@ def budget_difference(year: int, office: str = None) -> float:
     Gets the difference in the budget (of a given office or the entire budget) of a given year
     in relation to the year preceding it
 
-    example 1: the entire budget in 2020 decreased by 30%
-    >>> budget_difference(2020)
-    0.30980754270374117
+    example 1: the entire budget in 2016 increased by 9%
+    >>> budget_difference(2016)
+    0.09363775641203399
 
     example 2: the health budget in 2020 inecreased by 26%
     >>> budget_difference(2020, 'בריאות')
     0.26526068941785685
     """
     # gets the budget, of a specific office or the entire budget, for a specific year and the year preceding it
-    if office:
-        cur_budget = get_budget(year, office)
-        prev_budget = get_budget(year - 1, office)
-    else:
-        cur_budget = get_budget(year)
-        prev_budget = get_budget(year - 1)
+    cur_budget = get_budget(year, office)
+    prev_budget = get_budget(year - 1, office)
 
     # return the difference in the budget
     return (cur_budget - prev_budget) / prev_budget
 
 
 if __name__ == "__main__":
-    import doctest
+    pd.set_option('display.max_columns', None)
+    print(budget.shape)
+    print(budget.head(10))
 
-    print(education_budget(1997))
-    print(education_budget(2021))
+    import doctest
     print(doctest.testmod())
