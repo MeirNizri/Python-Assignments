@@ -3,14 +3,15 @@ import requests
 from xml.dom import minidom
 from prettytable import PrettyTable
 
-# request data
-database_url = 'http://knesset.gov.il/Odata/ParliamentInfo.svc/KNS_Faction()'
-response = requests.get(database_url)
 
 def create_kns_factions_db():
     """
     create sql database with all information on factions that run to the israeli knesset.
     """
+    # request data
+    database_url = 'http://knesset.gov.il/Odata/ParliamentInfo.svc/KNS_Faction()'
+    response = requests.get(database_url)
+
     # create database
     db = sqlite3.connect('my_database.db')
     cursor = db.cursor()
